@@ -1,5 +1,5 @@
 import { TTask, TTaskMapped } from '../types';
-import isOdd from './isOdd';
+import isOdd from '../../../helpers/isOdd';
 
 export default (task: TTask): TTaskMapped => ({
   ...task,

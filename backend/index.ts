@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import serverless from 'serverless-http';
 import morgan from 'morgan';
 import config from './config';
-import taskRouter from './src/routes/taskRouter';
+import taskRouter from './src/entities/task/routes';
 import errorHandler from './src/errors/errorHandler';
 import incorrectEndpoint from './src/middlewares/incorrectEndpoint';
 import cors from './src/middlewares/corsPolicySetup';

@@ -1,3 +1,10 @@
 import { createContext } from 'react';
+import { TContext } from '../../types';
 
-export default createContext<any>(null);
+const nub = () => ({});
+
+export default createContext<TContext>({
+  addTask: nub,
+  removeTask: nub,
+  toggleTask: nub,
+});

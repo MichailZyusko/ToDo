@@ -13,9 +13,7 @@ type Environment = {
     };
   };
 };
-type Config = {
-  [dev: string]: Environment;
-};
+type Config = Record<string, Environment>;
 
 const dev: Environment = {
   app: {

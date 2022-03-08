@@ -16,7 +16,7 @@
     ],
     "rules": {
         "react/jsx-props-no-spreading": "off",
-        "react/jsx-filename-extension": 0,
+        "react/jsx-filename-extension": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

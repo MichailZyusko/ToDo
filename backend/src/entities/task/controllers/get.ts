@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { TTaskMapped } from '../../types';
-import getTasks from '../../utils/aws/dynamoDB/getItems';
-import taskMapper from '../../helpers/taskMapper';
+import { TTaskMapped } from '../types';
+import getTasks from '../repository/getItems';
+import taskMapper from '../mappers';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {

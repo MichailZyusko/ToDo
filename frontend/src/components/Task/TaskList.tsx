@@ -19,7 +19,7 @@ const TaskListContainer = styled.div`
   width: 100%;
 `;
 
-const UL = styled.ul`
+const Ul = styled.ul`
   list-style-type: none;
   overflow-x: scroll;
   
@@ -31,7 +31,7 @@ const UL = styled.ul`
   width: 100%;
 `;
 
-const LI = styled.li<{ isChecked: boolean }>`
+const Li = styled.li<{ isChecked: boolean }>`
   display: flex;
   align-items: center;
   background: ${(props) => (props.isChecked ? 'rgba(173, 173, 173, 0.46)' : 'rgba(255, 255, 255, 0.46)')};
@@ -45,13 +45,13 @@ const LI = styled.li<{ isChecked: boolean }>`
 export default function TaskList({ tasks }: TProps) {
   return (
     <TaskListContainer>
-      <UL>
+      <Ul>
         {tasks.map((task) => (
-          <LI key={task.id} isChecked={task.isCompleted}>
+          <Li key={task.id} isChecked={task.isCompleted}>
             <Task {...task} />
-          </LI>
+          </Li>
         ))}
-      </UL>
+      </Ul>
     </TaskListContainer>
   );
 }

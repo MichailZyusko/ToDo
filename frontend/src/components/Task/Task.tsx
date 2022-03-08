@@ -20,20 +20,20 @@ const Text = styled.h2<{ isChecked: boolean }>`
 `;
 
 export default function Task({ id, label, isCompleted }: TProps) {
-  const { removeHandler, checkedHandler } = useContext(Context);
+  const { removeTask, toggleTask } = useContext(Context);
 
   return (
     <>
       <>
         <Checkbox
           isCompleted={isCompleted}
-          onComplete={checkedHandler}
+          onComplete={toggleTask}
           id={id}
         />
         <Text isChecked={isCompleted}>{label}</Text>
       </>
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-        <DeleteIcon onDelete={removeHandler} id={id} />
+        <DeleteIcon onDelete={removeTask} id={id} />
       </div>
     </>
   );

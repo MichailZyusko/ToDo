@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { TParams, TTask } from '../../types';
-import editItem from '../../utils/aws/dynamoDB/editItem';
-import taskMapper from '../../helpers/taskMapper';
+import { TParams, TTask } from '../types';
+import editItem from '../repository/editItem';
+import taskMapper from '../mappers';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {

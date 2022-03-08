@@ -1,6 +1,6 @@
-import db from './instance';
+import db from '../../../db/instance';
 import config from '../../../../config';
-import { TTask } from '../../../types';
+import { TTask } from '../types';
 
 export default async (task: TTask) => {
   const params = {

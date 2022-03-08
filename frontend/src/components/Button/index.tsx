@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -23,15 +23,16 @@ const StyledButton = styled.button`
 type TProps = {
   children: string;
   value: string;
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (value: string) => void;
 };
 
 export default function Button({
   children, value, onSubmit, ...prop
 }: TProps) {
+  const submitHandler = useCallback(() => onSubmit(value), [value, onSubmit]);
+
   return (
-    <StyledButton onClick={() => onSubmit(value)} {...prop}>
+    <StyledButton onClick={submitHandler} {...prop}>
       {children}
     </StyledButton>
   );

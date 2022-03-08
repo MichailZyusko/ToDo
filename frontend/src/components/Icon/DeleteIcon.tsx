@@ -1,22 +1,22 @@
-import React from 'react';
-import IMG from './components';
+import React, { useCallback } from 'react';
+import Img from './components';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import DeleteIcon from '../../assets/icons/delete.svg';
-// @ts-ignore
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import { TOnDelete } from '../../types';
 
 type TProps = {
-  onDelete: TOnDelete;
+  onDelete: (id: string) => void;
   id: string;
 };
 
 export default function Icon({ onDelete, id }: TProps) {
+  const onDeleteHandler = useCallback(() => onDelete(id), [id, onDelete]);
+
   return (
-    <IMG
+    <Img
       src={DeleteIcon}
       alt="deleteIcon"
-      onClick={() => onDelete(id)}
+      onClick={onDeleteHandler}
       style={{ margin: '4px 20px 0 0' }}
     />
   );

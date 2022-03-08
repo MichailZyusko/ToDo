@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// @ts-ignore
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import { TOnInputChange } from '../../types';
 
 const Input = styled.input.attrs((props) => ({
   type: 'text',
@@ -27,7 +24,7 @@ const Input = styled.input.attrs((props) => ({
 `;
 
 type TProps = {
-  onChange: TOnInputChange;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   placeholder: string;
 };

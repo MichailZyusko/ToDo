@@ -14,16 +14,16 @@ const Container = styled.div`
 
 export default function Form() {
   const [value, setValue] = useState('');
-  const { submitHandler } = useContext(Context);
+  const { addTask } = useContext(Context);
 
-  const changeHandler = (e: any) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
   return (
     <Container>
       <TextInput name="task" placeholder="Input your things" onChange={changeHandler} />
-      <Button value={value} onSubmit={submitHandler}>Add Task</Button>
+      <Button value={value} onSubmit={addTask}>Add Task</Button>
     </Container>
   );
 }

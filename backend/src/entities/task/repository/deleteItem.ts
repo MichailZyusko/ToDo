@@ -1,4 +1,4 @@
-import db from './instance';
+import db from '../../../db/instance';
 import config from '../../../../config';
 
 export default async ({ id }: { id: string }) => {

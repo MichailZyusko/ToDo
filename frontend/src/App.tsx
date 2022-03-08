@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { SpinnerInfinity } from 'spinners-react';
 
@@ -63,7 +63,7 @@ export default function App() {
     });
   }, []);
 
-  const removeHandler = async (id: string) => {
+  const removeTask = async (id: string) => {
     const status = await deleteService(id);
 
     if (status) {
@@ -73,7 +73,7 @@ export default function App() {
     }
   };
 
-  const checkedHandler = async (id: string) => {
+  const toggleTask = async (id: string) => {
     const updatedTask: TTask = await updatingService(id);
 
     if (updatedTask) {
@@ -83,17 +83,22 @@ export default function App() {
     }
   };
 
-  const submitHandler = async (value: string) => {
+  const addTask = async (value: string) => {
     const newTask: TTask = await creatingService(value);
 
     setTasks([newTask, ...tasks]);
   };
 
+  const initialState = useMemo(() => ({
+    removeTask,
+    toggleTask,
+    addTask,
+  }), [removeTask, toggleTask, addTask]);
+
   return (
     <AppContainer>
       <ErrorBoundary>
-        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-        <Context.Provider value={{ submitHandler, removeHandler, checkedHandler }}>
+        <Context.Provider value={initialState}>
           {tasks.length
             ? (
               <>

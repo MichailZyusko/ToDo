@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
-import createTask from '../../utils/aws/dynamoDB/createItem';
-import { TBody, TTask } from '../../types';
-import taskMapper from '../../helpers/taskMapper';
+import createTask from '../repository/createItem';
+import { TBody, TTask } from '../types';
+import taskMapper from '../mappers';
 
 class Task {
   public id: string;

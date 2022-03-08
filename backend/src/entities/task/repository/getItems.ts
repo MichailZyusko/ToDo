@@ -1,5 +1,5 @@
-import db from './instance';
-import { TTask } from '../../../types';
+import db from '../../../db/instance';
+import { TTask } from '../types';
 import config from '../../../../config';
 
 export default async (): Promise<TTask[]> => {
