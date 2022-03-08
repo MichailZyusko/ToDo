@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
 export default function Header() {
   return (
     <HeaderContainer>
-      <h1>Tasks</h1>
+      <h1 style={{ fontSize: '2.2rem' }}>Tasks</h1>
     </HeaderContainer>
   );
 }

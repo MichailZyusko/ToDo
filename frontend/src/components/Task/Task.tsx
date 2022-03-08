@@ -12,6 +12,11 @@ type TProps = {
 
 const Text = styled.h2<{ isChecked: boolean }>`
   text-decoration: ${(props) => (props.isChecked ? 'line-through' : 'none')};
+  font-size: 1.2rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
 
 export default function Task({ id, label, isCompleted }: TProps) {
