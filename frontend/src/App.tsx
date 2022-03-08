@@ -51,10 +51,9 @@ export default function App() {
   const [tasks, setTasks] = useState<TTask[]>([]);
 
   useEffect(() => {
-    getService()
-      .then((_tasks) => {
-        setTasks(_tasks);
-      });
+    getService().then((_tasks) => {
+      setTasks(_tasks);
+    });
   }, []);
 
   const removeHandler = async (id: string) => {
@@ -62,12 +61,13 @@ export default function App() {
 
     if (status) {
       const newTasks = tasks.filter((task) => task.id !== id);
+
       setTasks(newTasks);
     }
   };
 
   const checkedHandler = async (id: string) => {
-    const updatedTask = await updatingService(id);
+    const updatedTask: TTask = await updatingService(id);
 
     if (updatedTask) {
       const newTasks = tasks.map((t) => (t.id === updatedTask.id ? updatedTask : t));
@@ -76,8 +76,9 @@ export default function App() {
     }
   };
 
-  const submittingHandler = async (value: string) => {
-    const newTask = await creatingService(value);
+  const submitHandler = async (value: string) => {
+    const newTask: TTask = await creatingService(value);
+
     setTasks([newTask, ...tasks]);
   };
 
@@ -95,7 +96,7 @@ export default function App() {
               />
             </TaskListContainer>
             <FormContainer>
-              <Form onSubmit={submittingHandler} />
+              <Form onSubmit={submitHandler} />
             </FormContainer>
           </>
         )

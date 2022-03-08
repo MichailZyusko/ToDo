@@ -7,13 +7,27 @@ import Checkbox from '../Icon/CheckboxIcon.tsx';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import DeleteIcon from '../Icon/DeleteIcon.tsx';
 
+type TProps = {
+  id: string;
+  label: string;
+  isCompleted: boolean;
+  // eslint-disable-next-line no-unused-vars
+  onDelete: (id: string) => void;
+  // eslint-disable-next-line no-unused-vars
+  onComplete: (id: string) => void;
+};
+
+const Text = styled.h2<{ isChecked: boolean }>`
+  text-decoration: ${(props) => (props.isChecked ? 'line-through' : 'none')};
+`;
+
 export default function Task({
   id,
   label,
   isCompleted,
   onDelete,
   onComplete,
-}) {
+}: TProps) {
   return (
     <>
       <>
@@ -34,7 +48,3 @@ export default function Task({
     </>
   );
 }
-
-const Text = styled.h2<{ isChecked: boolean }>`
-  text-decoration: ${(props) => (props.isChecked ? 'line-through' : 'none')};
-`;
