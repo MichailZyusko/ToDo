@@ -1,0 +1,62 @@
+service: ToDoList
+
+custom:
+  tableName: 'tasks-${sls:stage}'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-2
+  lambdaHashingVersion: '20201221'
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [ TasksTable, Arn ]
+  environment:
+    AWS_DYNAMODB_TABLE_NAME: ${self:custom.tableName}
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http:
+          path: /api/v1/tasks
+          method: GET
+          cors: true
+      - http:
+          path: /api/v1/tasks
+          method: POST
+          cors: true
+      - http:
+          path: /api/v1/tasks/{id}
+          method: PUT
+          cors: true
+      - http:
+          path: /api/v1/tasks/{id}
+          method: DELETE
+          cors: true
+
+resources:
+  Resources:
+    TasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
+
+plugins:
+  - serverless-plugin-typescript
