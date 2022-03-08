@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { SpinnerInfinity } from 'spinners-react';
 
 import Header from './components/Header';
 import TaskList from './components/Task/TaskList';
@@ -9,6 +10,8 @@ import deleteService from './services/deleteService';
 import getService from './services/getService';
 import creatingService from './services/creatingService';
 import updatingService from './services/updateService';
+import ErrorBoundary from './components/ErrorBoundary';
+import Context from './context';
 
 const AppContainer = styled.div`
   display: flex;
@@ -40,7 +43,7 @@ const FormContainer = styled.div`
   box-shadow: 5px 10px 20px rgba(173, 173, 173, 0.46);
   backdrop-filter: blur(8px);
 
-  min-width: 35%;
+  width: 35%;
   height: 20vh;
   padding: 20px;
 
@@ -84,23 +87,24 @@ export default function App() {
 
   return (
     <AppContainer>
-      {tasks.length
-        ? (
-          <>
-            <TaskListContainer>
-              <Header />
-              <TaskList
-                tasks={tasks}
-                removeHandler={removeHandler}
-                checkedHandler={checkedHandler}
-              />
-            </TaskListContainer>
-            <FormContainer>
-              <Form onSubmit={submitHandler} />
-            </FormContainer>
-          </>
-        )
-        : <h1>Loading...</h1>}
+      <ErrorBoundary>
+        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+        <Context.Provider value={{ submitHandler, removeHandler, checkedHandler }}>
+          {tasks.length
+            ? (
+              <>
+                <TaskListContainer>
+                  <Header />
+                  <TaskList tasks={tasks} />
+                </TaskListContainer>
+                <FormContainer>
+                  <Form />
+                </FormContainer>
+              </>
+            )
+            : <SpinnerInfinity size={150} />}
+        </Context.Provider>
+      </ErrorBoundary>
     </AppContainer>
   );
 }

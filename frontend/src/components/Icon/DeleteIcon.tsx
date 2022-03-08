@@ -11,10 +11,7 @@ type TProps = {
   id: string;
 };
 
-export default function Icon({
-  onDelete,
-  id,
-}: TProps) {
+export default function Icon({ onDelete, id }: TProps) {
   return (
     <IMG
       src={DeleteIcon}

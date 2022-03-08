@@ -10,18 +10,16 @@ import { TOnComplete } from '../../types';
 
 type TProps = {
   onComplete: TOnComplete;
-  isChecked: boolean;
+  isCompleted: boolean;
+  id: string;
 };
 
-export default function Checkbox({
-  onComplete,
-  isChecked,
-}: TProps) {
+export default function Checkbox({ onComplete, isCompleted, id }: TProps) {
   return (
     <IMG
-      src={isChecked ? CheckedIcon : UncheckedIcon}
-      alt={isChecked ? 'checked' : 'unchecked'}
-      onClick={onComplete}
+      src={isCompleted ? CheckedIcon : UncheckedIcon}
+      alt={isCompleted ? 'checked' : 'unchecked'}
+      onClick={() => onComplete(id)}
       style={{
         margin: '0 20px',
         width: '30px',

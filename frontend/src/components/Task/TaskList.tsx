@@ -5,10 +5,6 @@ import { TTask } from '../../../types';
 
 type TProps = {
   tasks: Array<TTask>;
-  // eslint-disable-next-line no-unused-vars
-  removeHandler: (id: string) => void;
-  // eslint-disable-next-line no-unused-vars
-  checkedHandler: (id: string) => void;
 };
 
 const TaskListContainer = styled.div`
@@ -30,14 +26,15 @@ const UL = styled.ul`
   display: flex;
   flex: 1;
   flex-direction: column;
+  padding: 5px;
 
   width: 100%;
 `;
 
-const LI = styled.li<{ checked: boolean }>`
+const LI = styled.li<{ isChecked: boolean }>`
   display: flex;
   align-items: center;
-  background: ${(props) => (props.checked ? 'rgba(173, 173, 173, 0.46)' : 'rgba(255, 255, 255, 0.46)')};
+  background: ${(props) => (props.isChecked ? 'rgba(173, 173, 173, 0.46)' : 'rgba(255, 255, 255, 0.46)')};
   box-shadow: 0 5px 7px rgba(156, 156, 156, 0.25);
   backdrop-filter: blur(4px);
   border-radius: 30px;
@@ -45,25 +42,13 @@ const LI = styled.li<{ checked: boolean }>`
   margin-bottom: 20px;
 `;
 
-export default function TaskList({
-  tasks,
-  removeHandler,
-  checkedHandler,
-}: TProps) {
+export default function TaskList({ tasks }: TProps) {
   return (
     <TaskListContainer>
-      <UL style={{
-        listStyleType: 'none',
-        padding: '5px',
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        width: '100%',
-      }}
-      >
+      <UL>
         {tasks.map((task) => (
-          <LI key={task.id} checked={task.isCompleted}>
-            <Task {...task} onDelete={removeHandler} onComplete={checkedHandler} />
+          <LI key={task.id} isChecked={task.isCompleted}>
+            <Task {...task} />
           </LI>
         ))}
       </UL>

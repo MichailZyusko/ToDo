@@ -27,15 +27,13 @@ const Input = styled.input.attrs((props) => ({
 `;
 
 type TProps = {
-  name: string;
   onChange: TOnInputChange;
+  name: string;
+  placeholder: string;
 };
 
-export default function TextInput({
-  name,
-  onChange,
-}: TProps) {
+export default function TextInput({ onChange, ...props }: TProps) {
   return (
-    <Input placeholder="Input your things" name={name} onChange={onChange} />
+    <Input {...props} onChange={onChange} />
   );
 }

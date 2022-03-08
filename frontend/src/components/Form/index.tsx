@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+
 import Button from '../Button/index';
 import TextInput from '../Input/index';
-// @ts-ignore
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import { TOnSubmit } from '../../types/index';
+import Context from '../../context';
 
 const Container = styled.div`
   display: flex;
@@ -13,12 +12,9 @@ const Container = styled.div`
   width: 100%;
 `;
 
-type TProps = {
-  onSubmit: TOnSubmit;
-};
-
-export default function Form({ onSubmit }: TProps) {
+export default function Form() {
   const [value, setValue] = useState('');
+  const { submitHandler } = useContext(Context);
 
   const changeHandler = (e: any) => {
     setValue(e.target.value);
@@ -26,8 +22,8 @@ export default function Form({ onSubmit }: TProps) {
 
   return (
     <Container>
-      <TextInput name="task" onChange={changeHandler} />
-      <Button onClick={onSubmit} value={value}>Add Task</Button>
+      <TextInput name="task" placeholder="Input your things" onChange={changeHandler} />
+      <Button value={value} onSubmit={submitHandler}>Add Task</Button>
     </Container>
   );
 }

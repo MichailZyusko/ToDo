@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TOnSubmit } from '../../../types';
 
 const StyledButton = styled.button`
   width: 180px;
@@ -22,19 +21,17 @@ const StyledButton = styled.button`
 `;
 
 type TProps = {
-  onClick: TOnSubmit;
   children: string;
   value: string;
+  // eslint-disable-next-line no-unused-vars
+  onSubmit: (value: string) => void;
 };
 
 export default function Button({
-  children,
-  onClick,
-  value,
-  ...prop
+  children, value, onSubmit, ...prop
 }: TProps) {
   return (
-    <StyledButton onClick={() => onClick(value)} {...prop}>
+    <StyledButton onClick={() => onSubmit(value)} {...prop}>
       {children}
     </StyledButton>
   );

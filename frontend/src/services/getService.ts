@@ -4,9 +4,9 @@ import { TTask } from '../../types';
 
 export default async function getService(): Promise<TTask[]> {
   try {
-    const response = await axios.get(API_URL);
+    const { data } = await axios.get(API_URL);
 
-    return response.data as TTask[];
+    return data as TTask[];
   } catch (error) {
     console.log(error);
     throw error;
