@@ -56,10 +56,12 @@ const FormContainer = styled.div`
 
 export default function App() {
   const [tasks, setTasks] = useState<TTask[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getService().then((_tasks) => {
       setTasks(_tasks);
+      setIsLoading(true);
     });
   }, []);
 
@@ -99,18 +101,30 @@ export default function App() {
     <AppContainer>
       <ErrorBoundary>
         <Context.Provider value={initialState}>
-          {tasks.length
-            ? (
-              <>
-                <TaskListContainer>
-                  <Header />
-                  <TaskList tasks={tasks} />
-                </TaskListContainer>
-                <FormContainer>
-                  <Form />
-                </FormContainer>
-              </>
-            )
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {isLoading
+            ? tasks.length
+              ? (
+                <>
+                  <TaskListContainer>
+                    <Header />
+                    <TaskList tasks={tasks} />
+                  </TaskListContainer>
+                  <FormContainer>
+                    <Form />
+                  </FormContainer>
+                </>
+              )
+              : (
+                <>
+                  <TaskListContainer>
+                    <h1>Empty task list. Enjoy your time</h1>
+                  </TaskListContainer>
+                  <FormContainer>
+                    <Form />
+                  </FormContainer>
+                </>
+              )
             : <SpinnerInfinity size={150} />}
         </Context.Provider>
       </ErrorBoundary>
