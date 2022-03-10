@@ -1,7 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { SpinnerInfinity } from 'spinners-react';
-
 import Header from './components/Header';
 import TaskList from './components/Task/TaskList';
 import Form from './components/Form';
@@ -12,47 +9,8 @@ import creatingService from './services/creatingService';
 import updatingService from './services/updateService';
 import ErrorBoundary from './components/ErrorBoundary';
 import Context from './context';
-
-const AppContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #E5E5E5;
-`;
-
-const TaskListContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 55%;
-  max-height: 60vh;
-  padding: 20px;
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(255, 255, 255, 0.46);
-  box-shadow: 5px 10px 20px rgba(173, 173, 173, 0.46);
-  backdrop-filter: blur(8px);
-  
-  width: 35%;
-  height: 20vh; 
-  padding: 20px;
-
-  border-radius: 50px;
-  
-  @media (max-width: 768px) {
-    width: 70%;
-  }
-`;
+import { AppContainer, FormContainer, TaskListContainer } from './components/Containers';
+import Loader from './components/Loader';
 
 export default function App() {
   const [tasks, setTasks] = useState<TTask[]>([]);
@@ -66,6 +24,7 @@ export default function App() {
   }, []);
 
   const removeTask = async (id: string) => {
+    setIsLoading(false);
     const status = await deleteService(id);
 
     if (status) {
@@ -73,9 +32,11 @@ export default function App() {
 
       setTasks(newTasks);
     }
+    setIsLoading(true);
   };
 
   const toggleTask = async (id: string) => {
+    setIsLoading(false);
     const updatedTask: TTask = await updatingService(id);
 
     if (updatedTask) {
@@ -83,12 +44,15 @@ export default function App() {
 
       setTasks(newTasks);
     }
+    setIsLoading(true);
   };
 
   const addTask = async (value: string) => {
+    setIsLoading(false);
     const newTask: TTask = await creatingService(value);
 
     setTasks([newTask, ...tasks]);
+    setIsLoading(true);
   };
 
   const initialState = useMemo(() => ({
@@ -97,35 +61,36 @@ export default function App() {
     addTask,
   }), [removeTask, toggleTask, addTask]);
 
+  if (!isLoading) {
+    return <Loader />;
+  }
+
   return (
     <AppContainer>
       <ErrorBoundary>
         <Context.Provider value={initialState}>
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {isLoading
-            ? tasks.length
-              ? (
-                <>
-                  <TaskListContainer>
-                    <Header />
-                    <TaskList tasks={tasks} />
-                  </TaskListContainer>
-                  <FormContainer>
-                    <Form />
-                  </FormContainer>
-                </>
-              )
-              : (
-                <>
-                  <TaskListContainer>
-                    <h1>Empty task list. Enjoy your time</h1>
-                  </TaskListContainer>
-                  <FormContainer>
-                    <Form />
-                  </FormContainer>
-                </>
-              )
-            : <SpinnerInfinity size={150} />}
+          {tasks.length
+            ? (
+              <>
+                <TaskListContainer>
+                  <Header />
+                  <TaskList tasks={tasks} />
+                </TaskListContainer>
+                <FormContainer>
+                  <Form />
+                </FormContainer>
+              </>
+            )
+            : (
+              <>
+                <TaskListContainer>
+                  <h1>Empty task list. Enjoy your time</h1>
+                </TaskListContainer>
+                <FormContainer>
+                  <Form />
+                </FormContainer>
+              </>
+            )}
         </Context.Provider>
       </ErrorBoundary>
     </AppContainer>
